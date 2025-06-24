@@ -63,4 +63,12 @@ public class ProductCatalogService {
             throw new RuntimeException("Failed to delete product", e);
         }
     }
+    
+    public Product findById(int no) {
+        try (Connection conn = DBUtils.getConnection()) {
+            return catalogRepository.findById(no, conn);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get product", e);
+        }
+    }
 }

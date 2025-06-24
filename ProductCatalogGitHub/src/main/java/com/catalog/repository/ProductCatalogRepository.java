@@ -85,4 +85,19 @@ public class ProductCatalogRepository {
             throw new RuntimeException("Failed to delete product", e);
         }
 	}
+	
+	public Product findById(int no, Connection conn) {
+        String sql = "SELECT no, product_name, type, price FROM catalog WHERE no = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, no);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapProduct(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

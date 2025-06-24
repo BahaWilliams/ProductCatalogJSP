@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -9,13 +9,9 @@
 <body>
     <h1>${not empty product.no ? 'Edit' : 'Add'} Product</h1>
     
-    <form action="<c:url value='/products'/>" method="post"> <!-- Hapus "/mvc" -->
+    <form action="<c:url value='/products'/>" method="post">
         <c:if test="${not empty product.no}">
             <input type="hidden" name="no" value="${product.no}">
-            <input type="hidden" name="action" value="update">
-        </c:if>
-        <c:if test="${empty product.no}">
-            <input type="hidden" name="action" value="save">
         </c:if>
         
         <div>
@@ -27,10 +23,12 @@
             <label>Type:</label>
             <select name="type" required>
                 <option value="">Select Type</option>
-                <option value="Buku" ${product.type == 'Buku' ? 'selected' : ''}>Buku</option>
-                <option value="Elektronik" ${product.type == 'Elektronik' ? 'selected' : ''}>Elektronik</option>
-                <option value="Fashion" ${product.type == 'Fashion' ? 'selected' : ''}>Fashion</option>
-                <option value="Handphone & Tablet" ${product.type == 'Handphone & Tablet' ? 'selected' : ''}>Handphone & Tablet</option>
+                <c:forEach items="${types}" var="typeOption">
+                    <option value="${typeOption}" 
+                        ${product.type eq typeOption ? 'selected' : ''}>
+                        ${typeOption}
+                    </option>
+                </c:forEach>
             </select>
         </div>
         
